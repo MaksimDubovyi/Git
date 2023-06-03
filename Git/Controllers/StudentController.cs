@@ -38,5 +38,25 @@ namespace Git.Controllers
 
             return View(student);
         }
+
+        // GET: Students/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Students/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Surname,Age,GPA")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(student);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(student);
+        }
     }
 }
