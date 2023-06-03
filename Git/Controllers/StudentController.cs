@@ -21,6 +21,22 @@ namespace Git.Controllers
                         View(await _context.Students.ToListAsync()) :
                         Problem("Entity set 'StudentContext.Students'  is null.");
         }
+        // GET: Students/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Students == null)
+            {
+                return NotFound();
+            }
 
+            var student = await _context.Students
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return View(student);
+        }
     }
 }
